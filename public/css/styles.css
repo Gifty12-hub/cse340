@@ -4,3 +4,138 @@
 *:after {
   box-sizing: border-box;
 }
+
+body {
+  font-family: "Lato", serif;
+  border-radius: 40px;
+  background: white;
+  border-color: aqua;
+  margin: 50px;
+  padding: 40px;
+}
+
+/******* Header ***************/
+
+header {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* remove default blue link color and underline */
+a {
+  color: inherit; /* use surrounding text color */
+  text-decoration: none;
+  font-weight: bold; /* make links bold */
+}
+
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  margin: 0;
+  color: rgb(245, 244, 243);
+  background-color: rgb(40, 32, 32);
+}
+
+.hero img {
+  width: 40rem;
+  position: relative;
+  left: 20%;
+}
+
+.container {
+  position: absolute;
+  top: 45%;
+  left: 15%;
+  right: 10%;
+  padding: 10px;
+  background-color: rgba(233, 239, 242, 0.327);
+  color: #1897e7;
+  border-radius: 10px;
+  width: 17rem;
+  margin: 1rem;
+  border: 0.5px solid rgba(38, 108, 212, 0.1);
+  justify-items: center;
+}
+
+.button-box {
+  margin: 4rem;
+  background-color: rgb(16, 81, 179);
+  color: #eee8ee;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+.container p {
+  color: #1897e7;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cards {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  padding: 2rem;
+  max-width: 1400px;
+}
+
+.card {
+  background-color: rgb(255, 255, 251);
+  padding: 0;
+  border: 1px solid #dddddd98;
+  margin: 1rem;
+  border-radius: 10px;
+}
+
+/* layout for upgrades section: two rows of images */
+.upgrade-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.upgrade-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: royalblue;
+}
+
+.upgrade-item img {
+  width: 50px;
+  display: block;
+}
+
+.upgrade-item figcaption,
+.upgrade-item p {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-weight: 600;
+  background-color: rgb(255, 255, 251);
+}
+
+/* spacing for review list under cards */
+.cards .card ul {
+  padding-left: 1.25rem; /* standard list indent */
+  margin: 0;
+}
+
+.cards .card ul li {
+  margin-bottom: 0.5rem; /* add space between reviews */
+  line-height: 1.4;
+}
