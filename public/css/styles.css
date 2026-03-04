@@ -139,3 +139,49 @@ nav ul {
   margin-bottom: 0.5rem; /* add space between reviews */
   line-height: 1.4;
 }
+
+/* responsive adjustments */
+@media (max-width: 1024px) {
+  .cards {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .upgrade-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hero img {
+    width: 100%;
+    left: 0;
+    position: static;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .container {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: auto;
+    margin: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-box {
+    width: 100%;
+    text-align: center;
+  }
+}
