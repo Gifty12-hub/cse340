@@ -11,7 +11,7 @@
             "server": "localhost",
             "driver": "PostgreSQL",
             "name": "cse340_new",
-            "connectString": "postgresql://cse340_new_y27p_user:72Sj0LyhSugtQExXqTqjvRWTgyzh0tTg@dpg-d6ojdhjh46gs73am9dj0-a.ohio-postgres.render.com/cse340_new_y27p"
+            "connectString": "postgresql://cse340_new_uzeg_user:aFpTZwAjkIo1jwRmhRNS78mz997otApn@dpg-d6ritmma2pns73fomgg0-a.ohio-postgres.render.com/cse340_new_uzeg"
         }
     ]
 }
