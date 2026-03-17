@@ -27,10 +27,12 @@ app.use(static)
 /* ***********************
   *Index route
  *************************/
-app.get("/", function(req, res){
-  res.render("index", { title: "Home" })
-})
 app.get("/", baseController.buildHome)
+
+/* ***********************
+ * Inventory Routes
+ *************************/
+app.use("/inv", inventoryRoute)
 
 /* ***********************
  * Local Server Information
