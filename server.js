@@ -24,6 +24,9 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes
  *************************/
 app.use(static)
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
 
 /* ***********************
   *Index route
@@ -34,6 +37,20 @@ app.get("/", baseController.buildHome)
  * Inventory Routes
  *************************/
 app.use("/inv", inventoryRoute)
+
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  res.render("errors/error", {
+    title: err.status || 'Server Error',
+    message: err.message,
+    nav
+  })
+})
 
 /* ***********************
  * Local Server Information
