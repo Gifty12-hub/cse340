@@ -65,3 +65,29 @@ Util.buildClassificationGrid = async function(data){
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+
+/**HTML DetailedView */
+function buildItemDetail(data) {
+  if (!data) {
+    return "<p>No vehicle data available.</p>";
+  }
+
+  return `
+    <div class="vehicle-detail">
+      <div class="vehicle-image">
+        <img src="${data.inv_image}" alt="${data.inv_make} ${data.inv_model}">
+      </div>
+      <div class="vehicle-info">
+        <h2>${data.inv_year} ${data.inv_make} ${data.inv_model}</h2>
+        <p><strong>Price:</strong> $${new Intl.NumberFormat().format(data.inv_price)}</p>
+        <p><strong>Mileage:</strong> ${new Intl.NumberFormat().format(data.inv_miles)} miles</p>
+        <p><strong>Color:</strong> ${data.inv_color}</p>
+        <p><strong>Description:</strong> ${data.inv_description}</p>
+      </div>
+    </div>
+  `;
+}
+
+
+

@@ -185,3 +185,53 @@ nav ul {
     text-align: center;
   }
 }
+
+
+/* ===== Vehicle Detail View ===== */
+
+.vehicle-detail {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.vehicle-image img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+.vehicle-info {
+  flex: 1;
+}
+
+.vehicle-info h2 {
+  font-size: 1.8rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.vehicle-info p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .vehicle-detail {
+    flex-direction: column;
+  }
+}
+
+.vehicle-detail {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .vehicle-detail {
+    display: flex;
+  }
+}

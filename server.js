@@ -7,6 +7,12 @@
  *************************/
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
+const dotenv = require("dotenv").config()
+const path = require("path")         // <-- this line fixes the ReferenceError
+
+
+const express = require("express")
+const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
@@ -19,15 +25,15 @@ const utilities = require("./utilities");
  *************************/
 app.set("view engine", "ejs")
 app.use(expressLayouts)
-app.set("layout", "./layouts/layout") // not at views root
+app.set("layout", "./layouts/layout") 
+app.set("views", path.join(__dirname, "views"))
+
 
 /* ***********************
  * Routes
  *************************/
 app.use(static)
-app.use(async (req, res, next) => {
-  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
-})
+
 
 /* ***********************
   *Index route
@@ -38,11 +44,16 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
  * Inventory Routes
  *************************/
 app.use("/inv", inventoryRoute)
+app.get("/test", (req, res) => {
+  res.send("Server is running!")
+})
 
+/* Place after all other middleware */
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
 /* ***********************
-* Express Error Handler
-* Place after all other middleware
-*************************/
+* Express Error Handler*/
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)

@@ -1,0 +1,51 @@
+<head>
+    <title>
+        <%= title %>
+    </title>
+</head>
+<body>
+    <% if (title) { %>
+    <h1>
+        <%# messages() %>
+        <%= title %>
+    </h1>
+
+
+    <div class="vehicle-detail">
+    
+        <!-- IMAGE -->
+        <div class="vehicle-image">
+            <img src="<%= item.inv_image %>" alt="<%= item.inv_make %> <%= item.inv_model %>">
+        </div>
+    
+        <!-- DETAILS -->
+        <div class="vehicle-info">
+            <h2>
+                <%= item.inv_year %>
+                    <%= item.inv_make %>
+                        <%= item.inv_model %>
+            </h2>
+    
+            <p class="price">
+                <strong>Price:</strong>
+                $<%= new Intl.NumberFormat().format(item.inv_price) %>
+            </p>
+    
+            <p>
+                <strong>Mileage:</strong>
+                <%= new Intl.NumberFormat().format(item.inv_miles) %> miles
+            </p>
+    
+            <p><strong>Color:</strong>
+                <%= item.inv_color %>
+            </p>
+    
+            <p><strong>Description:</strong>
+                <%= item.inv_description %>
+            </p>
+    
+        </div>
+    
+    </div>
+</body>
+
