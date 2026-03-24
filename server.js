@@ -1,16 +1,10 @@
 /* ******************************************
- * This server.js file is the primary file of the 
+ * This server.js file is the primary file of the
  * application. It is used to control the project.
  *******************************************/
 /* ***********************
  * Require Statements
  *************************/
-const express = require("express")
-const expressLayouts = require("express-ejs-layouts")
-const dotenv = require("dotenv").config()
-const path = require("path")         // <-- this line fixes the ReferenceError
-
-
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
@@ -21,19 +15,16 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities");
 
 /* ***********************
- * Veiw Engine and Templates
+ * View Engine and Templates
  *************************/
-app.set("view engine", "ejs")
-app.use(expressLayouts)
-app.set("layout", "./layouts/layout") 
-app.set("views", path.join(__dirname, "views"))
-
+app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set("layout", "./layouts/layout"); // not at views root
 
 /* ***********************
  * Routes
  *************************/
 app.use(static)
-
 
 /* ***********************
   *Index route
@@ -78,3 +69,4 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
+ 
