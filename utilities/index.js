@@ -24,8 +24,6 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-module.exports = Util
-
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
@@ -60,34 +58,52 @@ Util.buildClassificationGrid = async function(data){
 }
 
 /* ****************************************
+ * Build the vehicle detail HTML view
+ * Formats detailed vehicle information with proper currency and mileage formatting
+ **************************************** */
+Util.buildItemDetail = function(data) {
+  if (!data) {
+    return "<p class=\"notice\">No vehicle data available.</p>";
+  }
+
+  const formattedPrice = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(data.inv_price);
+
+  const formattedMileage = new Intl.NumberFormat('en-US').format(data.inv_miles);
+
+  return `
+    <div class="vehicle-detail-container">
+      <div class="vehicle-detail-content">
+        <div class="vehicle-detail-image">
+          <img src="${data.inv_image}" alt="Full-size image of ${data.inv_year} ${data.inv_make} ${data.inv_model}" />
+        </div>
+        <div class="vehicle-detail-info">
+          <div class="vehicle-detail-highlights">
+            <p class="vehicle-year"><strong>Year:</strong> ${data.inv_year}</p>
+            <p class="vehicle-price"><strong>Price:</strong> ${formattedPrice}</p>
+            <p class="vehicle-mileage"><strong>Mileage:</strong> ${formattedMileage} miles</p>
+            <p class="vehicle-color"><strong>Color:</strong> ${data.inv_color}</p>
+          </div>
+          <div class="vehicle-detail-description">
+            <h3>About This Vehicle</h3>
+            <p>${data.inv_description}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
-
-/**HTML DetailedView */
-function buildItemDetail(data) {
-  if (!data) {
-    return "<p>No vehicle data available.</p>";
-  }
-
-  return `
-    <div class="vehicle-detail">
-      <div class="vehicle-image">
-        <img src="${data.inv_image}" alt="${data.inv_make} ${data.inv_model}">
-      </div>
-      <div class="vehicle-info">
-        <h2>${data.inv_year} ${data.inv_make} ${data.inv_model}</h2>
-        <p><strong>Price:</strong> $${new Intl.NumberFormat().format(data.inv_price)}</p>
-        <p><strong>Mileage:</strong> ${new Intl.NumberFormat().format(data.inv_miles)} miles</p>
-        <p><strong>Color:</strong> ${data.inv_color}</p>
-        <p><strong>Description:</strong> ${data.inv_description}</p>
-      </div>
-    </div>
-  `;
-}
+module.exports = Util
 
 
 
