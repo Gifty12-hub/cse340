@@ -21,10 +21,13 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout"); // not at views root
 
+/* ✅ ADD THIS LINE HERE */
+app.use(express.static("public"))
+
 /* ***********************
  * Routes
  *************************/
-app.use(express.static("public"))
+app.use(static)
 
 /* ***********************
   *Index route

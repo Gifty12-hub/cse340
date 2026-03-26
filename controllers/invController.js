@@ -36,5 +36,12 @@ invCont.buildByInventoryId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+*  Throw intentional error to test that error handling is working properly.
+* ************************** */
+invCont.throwError = async function (req, res) {
+  throw new Error("I am an intentional error");
+};
+
 module.exports = invCont
   
