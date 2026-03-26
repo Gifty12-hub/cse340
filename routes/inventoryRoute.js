@@ -8,8 +8,8 @@ const utilities = require("../utilities");
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
-// Vehicle Detail Route
-router.get("/detail/:id", utilities.handleErrors(invController.buildDetail));
+/// Vehicle Detail Route
+router.get("/detail/:id", utilities.handleErrors(invController.buildByInventoryId));
 
 // Broken route
 router.get("/broken", utilities.handleErrors(invController.throwError));
