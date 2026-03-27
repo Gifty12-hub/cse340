@@ -451,3 +451,50 @@ nav ul {
     font-size: 1rem;
   }
 }
+
+/*Account View*/
+.login-form {
+  max-width: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.login-form input {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-form button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+}
+
+.notice {
+  background-color: #ffdddd;
+  padding: 10px;
+  margin: 10px auto;
+  max-width: 400px;
+  border-left: 5px solid red;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 15px;
+}
