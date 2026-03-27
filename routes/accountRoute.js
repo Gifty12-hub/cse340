@@ -8,6 +8,7 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
 //Register
 router.get("/register", accountController.buildRegister)
+router.post('/register', utilities.handleErrors(accountController.registerAccount))
 
 // handle form submission
 router.post("/register", (req, res) => {
