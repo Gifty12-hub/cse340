@@ -453,6 +453,7 @@ nav ul {
 }
 
 /*Account View*/
+/* login form styling */
 .login-form {
   max-width: 400px;
   margin: 20px auto;
@@ -497,4 +498,53 @@ nav ul {
 .register-link {
   text-align: center;
   margin-top: 15px;
+}
+
+/*Registration form styling */
+form {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button#togglePassword {
+  background-color: #6c757d;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.flash-message {
+  text-align: center;
+  color: green;
+  margin-top: 20px;
 }

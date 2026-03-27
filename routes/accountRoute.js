@@ -1,11 +1,12 @@
-// Needed Resources
 const express = require("express");
 const router = new express.Router();
-const accountController = require("../controllers/accountController");
-// Needed Resources
 const utilities = require("../utilities");
+const accountController = require("../controllers/accountController");
 
-// Route to build account
+// Login route
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
+
+//Register
+router.get("/register", accountController.buildRegister)
 
 module.exports = router;

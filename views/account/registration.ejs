@@ -1,0 +1,51 @@
+
+<title>
+    <%= title %>
+</title>
+
+<h1>
+    <%= title %>
+</h1>
+
+<% if (messages && messages.notice) { %>
+    <div class="notice">
+        <%= messages.notice %>
+    </div>
+    <% } %>
+
+<main class="form-container">
+
+      <form action="/account/register" method="post">
+
+        <!-- First Name -->
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" name="firstname" required
+                    value="<%= typeof firstname !== 'undefined' ? firstname : '' %>">
+
+                <!-- Last Name -->
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" name="lastname" required
+                    value="<%= typeof lastname !== 'undefined' ? lastname : '' %>">
+
+                <!-- Email -->
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required
+                    value="<%= typeof email !== 'undefined' ? email : '' %>">
+
+                <!-- Password -->
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="button" onclick="togglePassword()">Show Password</button>
+
+                <!-- Password Requirements -->
+                <small class="password-rules">
+                    Password must be at least 12 characters long, contain at least one uppercase letter, one number, and
+                    one special character.
+                </small>
+
+                <!-- Submit Button -->
+                <button type="submit">Register</button>
+
+            </form>
+</main>
