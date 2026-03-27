@@ -9,4 +9,13 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin));
 //Register
 router.get("/register", accountController.buildRegister)
 
+// handle form submission
+router.post("/register", (req, res) => {
+  const { username, email, password } = req.body;
+
+  // TODO: validate + save user
+  console.log("Registering:", username, email);
+
+  res.redirect("/login"); // after successful registration
+});
 module.exports = router;
