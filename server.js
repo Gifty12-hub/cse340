@@ -28,7 +28,14 @@ const pool = require('./database/')
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
-}))
+ }))
+
+ /* Express Messages Middleware */
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 
 /* ***********************
  * View Engine and Templates
@@ -91,9 +98,3 @@ app.listen(port, () => {
 })
  
 
-/* Express Messages Middleware */
-app.use(require('connect-flash')())
-app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-})
