@@ -1,0 +1,27 @@
+<h1>Add New Classification</h1>
+
+<!-- Flash message display -->
+<% if (message) { %>
+    <p class="flash <%= message.type %>">
+        <%= message.text %>
+    </p>
+    <% } %>
+
+        <!-- Error messages from server-side validation -->
+        <% if (errors) { %>
+            <ul class="errors">
+                <% errors.forEach(function(err) { %>
+                    <li>
+                        <%= err.msg %>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } %>
+
+                <form action="/inventory/add-classification" method="POST" onsubmit="return validateForm();">
+                    <label for="classification_name">Classification Name:</label>
+                    <input type="text" id="classification_name" name="classification_name" required>
+                    <p class="hint">No spaces or special characters allowed.</p>
+
+                    <button type="submit">Add Classification</button>
+                </form>

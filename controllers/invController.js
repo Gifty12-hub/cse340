@@ -43,5 +43,16 @@ invCont.throwError = async function (req, res) {
   throw new Error("I am an intentional error");
 };
 
-module.exports = invCont
+/* ****************************************
+ * Deliver Inventory Management View
+ * *************************************** */
+async function buildManagement(req, res, next) {
+    let message = req.flash("notice"); // Assuming you're using connect-flash
+    res.render("inventory/management", {
+        title: "Inventory Management",
+        message,
+    });
+}
+
+module.exports = { invCont, buildManagement };
   
