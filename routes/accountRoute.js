@@ -7,16 +7,9 @@ const accountController = require("../controllers/accountController");
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
 //Register
-router.get("/register", accountController.buildRegister)
-router.post('/register', utilities.handleErrors(accountController.registerAccount))
+router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
 // handle form submission
-router.post("/register", (req, res) => {
-  const { username, email, password } = req.body;
+router.post("/register", utilities.handleErrors(accountController.registerAccount));
 
-  // TODO: validate + save user
-  console.log("Registering:", username, email);
-
-  res.redirect("/login"); // after successful registration
-});
 module.exports = router;
