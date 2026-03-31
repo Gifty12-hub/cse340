@@ -19,7 +19,7 @@ router.get("/broken", utilities.handleErrors(invController.throwError));
 router.get("/", invController.buildManagement);
 
 // Routes for Task 2 and Task 3 will need to exist too:
-router.get("/add-classification", invController.buildAddClassification);
-router.get("/add-inventory", invController.buildAddInventory);
+// router.get("/add-classification", invController.buildAddClassification);
+// router.get("/add-inventory", invController.buildAddInventory);
 
 module.exports = router;
