@@ -1,5 +1,2 @@
 
--- Query 6 from assignment2
-UPDATE inventory
-SET inv_image = REPLACE(inv_image,'/images/','/images/vehicles/'),
-inv_thumbnail = REPLACE(inv_thumbnail,'/images/','/images/vehicles/');
+SELECT * FROM account;
