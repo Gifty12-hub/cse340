@@ -73,5 +73,53 @@ async function registerAccount(req, res) {
   }
 }
 
+/* ****************************************
+*  Process Login
+* *************************************** */
+async function loginAccount(req, res) {
+  let nav = await utilities.getNav()
+  const { account_email, account_password } = req.body
 
-module.exports = { buildLogin, buildRegister, registerAccount }
+  try {
+    // email
+    const accountData = await accountModel.getAccountByEmail(account_email)
+
+    if (!accountData) {
+      // Email not found → failure message
+      return res.render("account/login", {
+        title: "Login",
+        nav,
+        errors: [{ msg: "Invalid email or password." }],
+        account_email, // keep what user typed
+      })
+    }
+
+    // password 
+    const passwordMatch = await bcrypt.compare(account_password, accountData.account_password)
+    if (!passwordMatch) {
+      // Wrong password → failure message
+      return res.render("account/login", {
+        title: "Login",
+        nav,
+        errors: [{ msg: "Invalid email or password." }],
+        account_email,
+      })
+    }
+
+    // Successful login → store session / redirect
+    req.session.account_id = accountData.account_id
+    req.session.account_firstname = accountData.account_firstname
+    res.redirect("/account/dashboard") // or wherever logged-in users go
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).render("account/login", {
+      title: "Login",
+      nav,
+      errors: [{ msg: "Server error. Please try again later." }],
+      account_email,
+    })
+  }
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, loginAccount }
