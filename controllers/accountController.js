@@ -108,8 +108,8 @@ async function loginAccount(req, res) {
   } else {
     req.flash("notice", "Sorry, the login failed")
     res.status(201).render("account/dashboard", {
-      title: "Dashboard",
       nav,
+      errors: null,
     })
   }
 }

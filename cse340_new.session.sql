@@ -1,2 +1,2 @@
 
-SELECT * FROM account;
+DELETE FROM account;
