@@ -1,6 +1,5 @@
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
-const accountModel = require("../models/account-model")
 const validate = {}
 
 /*  **********************************
@@ -60,7 +59,8 @@ const validate = {}
  * Check data and return errors or continue to registration
  * ***************************** */
 validate.checkRegData = async (req, res, next) => {
-  const { account_firstname, account_lastname, account_email } = req.body
+  const { account_firstname, account_lastname, account_email } =
+  req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -78,4 +78,4 @@ validate.checkRegData = async (req, res, next) => {
   next()
 }
 
-module.exports = validate
+module.exports = validate 

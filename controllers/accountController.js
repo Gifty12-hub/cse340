@@ -53,7 +53,7 @@ async function registerAccount(req, res) {
     account_email,
     hashedPassword // <-- use hashed password here
   )
-
+ 
 
   if (regResult) {
     req.flash(
