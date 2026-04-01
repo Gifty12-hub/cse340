@@ -80,44 +80,36 @@ async function loginAccount(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
 
+  // Hash password before storing
+  let hashedPassword
   try {
-    // email
-    const accountData = await accountModel.getAccountByEmail(account_email)
-
-    if (!accountData) {
-      // Email not found → failure message
-      return res.render("account/login", {
-        title: "Login",
-        nav,
-        errors: [{ msg: "Invalid email or password." }],
-        account_email, // keep what user typed
-      })
-    }
-
-    // password 
-    const passwordMatch = await bcrypt.compare(account_password, accountData.account_password)
-    if (!passwordMatch) {
-      // Wrong password → failure message
-      return res.render("account/login", {
-        title: "Login",
-        nav,
-        errors: [{ msg: "Invalid email or password." }],
-        account_email,
-      })
-    }
-
-    // Successful login → store session / redirect
-    req.session.account_id = accountData.account_id
-    req.session.account_firstname = accountData.account_firstname
-    res.redirect("/account/dashboard") // or wherever logged-in users go
-
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
   } catch (error) {
-    console.error(error)
+    req.flash("notice", 'Sorry, there was an error processing the login.')
     res.status(500).render("account/login", {
       title: "Login",
       nav,
-      errors: [{ msg: "Server error. Please try again later." }],
-      account_email,
+      errors: null,
+    })
+    return
+  }
+
+  const regResult = await accountModel.loginAccount(
+    account_email,
+    hashedPassword // <-- use hashed password here
+  )
+  if (!regResult) {
+    req.flash("notice", "login successfully.")
+    res.status(501).render("account/login", {
+      title: "Login",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Sorry, the login failed")
+    res.status(201).render("account/dashboard", {
+      title: "Dashboard",
+      nav,
     })
   }
 }
