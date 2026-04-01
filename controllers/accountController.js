@@ -87,12 +87,7 @@ async function loginAccount(req, res) {
     hashedPassword = await bcrypt.hashSync(account_password, 10)
   } catch (error) {
     req.flash("notice", 'Sorry, there was an error processing the login.')
-    res.status(500).render("account/login", {
-      title: "Login",
-      nav,
-      errors: null,
-    })
-    return
+    return res.redirect("/account/login")
   }
 
   const regResult = await accountModel.loginAccount(

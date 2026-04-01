@@ -17,6 +17,7 @@ const session = require("express-session")
 const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute");
 const bodyParser = require("body-parser")
+const flash = require("connect-flash")
 
 /* ***********************
  * Middleware
@@ -30,7 +31,7 @@ const bodyParser = require("body-parser")
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
- })),
+}));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 

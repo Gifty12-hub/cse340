@@ -47,11 +47,12 @@ invCont.throwError = async function (req, res) {
  * Deliver Inventory Management View
  * *************************************** */
 async function buildManagement(req, res, next) {
-    let message = req.flash("notice"); // Assuming you're using connect-flash
-    res.render("inventory/management", {
-        title: "Inventory Management",
-        message,
-    });
+  let nav = await utilities.getNav()
+  res.render("inventory/management", {
+    title: "Inventory Management",
+    nav,
+    message: req.flash("notice") // or whatever you're using
+  })
 }
 
 module.exports = { invCont, buildManagement };

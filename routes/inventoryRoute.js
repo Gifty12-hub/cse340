@@ -2,6 +2,7 @@
 const express = require("express");
 const router = new express.Router();
 const invController = require("../controllers/invController");
+const { validateClassification } = require("../middleware/inventory-validation")
 
 // Needed Resources
 const utilities = require("../utilities");
@@ -18,8 +19,14 @@ router.get("/broken", utilities.handleErrors(invController.throwError));
 // Route to management view
 router.get("/", invController.buildManagement);
 
-// Routes for Task 2 and Task 3 will need to exist too:
-// router.get("/add-classification", invController.buildAddClassification);
-// router.get("/add-inventory", invController.buildAddInventory);
+// Display Add Classification form
+router.get("/add-classification", invController.buildAddClassification)
+
+// Process Add Classification form
+router.post(
+  "/add-classification",
+  validateClassification,
+  invController.addClassification
+);
 
 module.exports = router;
