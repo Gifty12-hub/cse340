@@ -1,0 +1,204 @@
+<h1>Add New Vehicle</h1>
+
+<!-- Flash Message -->
+<% if (typeof message !== 'undefined' && message) { %>
+    <p class="notice" style="color: green;">
+        <%= message %>
+    </p>
+<% } %>
+
+<!-- Error Messages -->
+<% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+    <ul class="errors" style="color: red;">
+        <% errors.forEach(error => { %>
+            <li>
+                <%= error.msg %>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<form action="/inv/add-inventory" method="post" id="addInventoryForm" onsubmit="return validateInventoryForm();" novalidate>
+
+    <!-- Classification Dropdown -->
+    <label for="classificationList">Classification</label>
+    <%- classificationList %>
+    <span id="classificationError" style="color: red; display: none;"></span>
+
+    <!-- Make -->
+    <label for="inv_make">Make</label>
+    <input type="text" name="inv_make" id="inv_make" required
+        value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>">
+    <span id="makeError" style="color: red; display: none;"></span>
+
+    <!-- Model -->
+    <label for="inv_model">Model</label>
+    <input type="text" name="inv_model" id="inv_model" required
+        value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>">
+    <span id="modelError" style="color: red; display: none;"></span>
+
+    <!-- Year -->
+    <label for="inv_year">Year</label>
+    <input type="number" name="inv_year" id="inv_year" required min="1900" max="2099"
+        value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>">
+    <span id="yearError" style="color: red; display: none;"></span>
+
+    <!-- Description -->
+    <label for="inv_description">Description</label>
+    <textarea name="inv_description" id="inv_description"
+        required><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
+    <span id="descriptionError" style="color: red; display: none;"></span>
+
+    <!-- Image Path -->
+    <label for="inv_image">Image Path</label>
+    <input type="text" name="inv_image" id="inv_image" required
+        value="<%= typeof inv_image !== 'undefined' ? inv_image : '/images/vehicles/no-image.png' %>">
+    <span id="imageError" style="color: red; display: none;"></span>
+
+    <!-- Thumbnail Path -->
+    <label for="inv_thumbnail">Thumbnail Path</label>
+    <input type="text" name="inv_thumbnail" id="inv_thumbnail" required
+        value="<%= typeof inv_thumbnail !== 'undefined' ? inv_thumbnail : '/images/vehicles/no-image-tn.png' %>">
+    <span id="thumbnailError" style="color: red; display: none;"></span>
+
+    <!-- Price -->
+    <label for="inv_price">Price</label>
+    <input type="number" name="inv_price" id="inv_price" required step="0.01"
+        value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>">
+    <span id="priceError" style="color: red; display: none;"></span>
+
+    <!-- Miles -->
+    <label for="inv_miles">Miles</label>
+    <input type="number" name="inv_miles" id="inv_miles" required
+        value="<%= typeof inv_miles !== 'undefined' ? inv_miles : '' %>">
+    <span id="milesError" style="color: red; display: none;"></span>
+
+    <!-- Color -->
+    <label for="inv_color">Color</label>
+    <input type="text" name="inv_color" id="inv_color" required
+        value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>">
+    <span id="colorError" style="color: red; display: none;"></span>
+
+    <button type="submit">Add Vehicle</button>
+
+</form>
+
+<script>
+function validateInventoryForm() {
+    let isValid = true;
+    
+    // Clear all error messages
+    document.getElementById('classificationError').style.display = 'none';
+    document.getElementById('makeError').style.display = 'none';
+    document.getElementById('modelError').style.display = 'none';
+    document.getElementById('yearError').style.display = 'none';
+    document.getElementById('descriptionError').style.display = 'none';
+    document.getElementById('imageError').style.display = 'none';
+    document.getElementById('thumbnailError').style.display = 'none';
+    document.getElementById('priceError').style.display = 'none';
+    document.getElementById('milesError').style.display = 'none';
+    document.getElementById('colorError').style.display = 'none';
+    
+    // Classification validation
+    const classification = document.getElementById('classificationList').value.trim();
+    if (!classification) {
+        document.getElementById('classificationError').textContent = 'Classification is required.';
+        document.getElementById('classificationError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Make validation
+    const make = document.getElementById('inv_make').value.trim();
+    if (!make) {
+        document.getElementById('makeError').textContent = 'Make is required.';
+        document.getElementById('makeError').style.display = 'block';
+        isValid = false;
+    } else if (make.length < 3) {
+        document.getElementById('makeError').textContent = 'Make must be at least 3 characters.';
+        document.getElementById('makeError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Model validation
+    const model = document.getElementById('inv_model').value.trim();
+    if (!model) {
+        document.getElementById('modelError').textContent = 'Model is required.';
+        document.getElementById('modelError').style.display = 'block';
+        isValid = false;
+    } else if (model.length < 3) {
+        document.getElementById('modelError').textContent = 'Model must be at least 3 characters.';
+        document.getElementById('modelError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Year validation
+    const year = parseInt(document.getElementById('inv_year').value);
+    if (!year || isNaN(year)) {
+        document.getElementById('yearError').textContent = 'Year is required.';
+        document.getElementById('yearError').style.display = 'block';
+        isValid = false;
+    } else if (year < 1900 || year > 2099) {
+        document.getElementById('yearError').textContent = 'Year must be between 1900 and 2099.';
+        document.getElementById('yearError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Description validation
+    const description = document.getElementById('inv_description').value.trim();
+    if (!description) {
+        document.getElementById('descriptionError').textContent = 'Description is required.';
+        document.getElementById('descriptionError').style.display = 'block';
+        isValid = false;
+    } else if (description.length < 10) {
+        document.getElementById('descriptionError').textContent = 'Description must be at least 10 characters.';
+        document.getElementById('descriptionError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Image validation
+    const image = document.getElementById('inv_image').value.trim();
+    if (!image) {
+        document.getElementById('imageError').textContent = 'Image path is required.';
+        document.getElementById('imageError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Thumbnail validation
+    const thumbnail = document.getElementById('inv_thumbnail').value.trim();
+    if (!thumbnail) {
+        document.getElementById('thumbnailError').textContent = 'Thumbnail path is required.';
+        document.getElementById('thumbnailError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Price validation
+    const price = parseFloat(document.getElementById('inv_price').value);
+    if (!price || isNaN(price) || price < 0) {
+        document.getElementById('priceError').textContent = 'Price must be a valid number.';
+        document.getElementById('priceError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Miles validation
+    const miles = parseInt(document.getElementById('inv_miles').value);
+    if (!miles && miles !== 0 || isNaN(miles) || miles < 0) {
+        document.getElementById('milesError').textContent = 'Miles must be a valid number.';
+        document.getElementById('milesError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Color validation
+    const color = document.getElementById('inv_color').value.trim();
+    if (!color) {
+        document.getElementById('colorError').textContent = 'Color is required.';
+        document.getElementById('colorError').style.display = 'block';
+        isValid = false;
+    } else if (color.length < 3) {
+        document.getElementById('colorError').textContent = 'Color must be at least 3 characters.';
+        document.getElementById('colorError').style.display = 'block';
+        isValid = false;
+    }
+    
+    return isValid;
+}
+</script>

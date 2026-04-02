@@ -80,33 +80,28 @@ async function loginAccount(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
 
-  // Hash password before storing
-  let hashedPassword
-  try {
-    // regular password and cost (salt is generated automatically)
-    hashedPassword = await bcrypt.hashSync(account_password, 10)
-  } catch (error) {
-    req.flash("notice", 'Sorry, there was an error processing the login.')
+  const accountData = await accountModel.getAccountByEmail(account_email)
+  if (!accountData) {
+    req.flash("notice", "Invalid credentials. Please try again.")
     return res.redirect("/account/login")
   }
 
-  const regResult = await accountModel.loginAccount(
-    account_email,
-    hashedPassword // <-- use hashed password here
-  )
-  if (!regResult) {
-    req.flash("notice", "login successfully.")
-    res.status(501).render("account/login", {
-      title: "Login",
-      nav,
-    })
-  } else {
-    req.flash("notice", "Sorry, the login failed")
-    res.status(201).render("account/dashboard", {
-      nav,
-      errors: null,
-    })
+  const passwordMatch = await bcrypt.compare(account_password, accountData.account_password)
+
+  if (!passwordMatch) {
+    req.flash("notice", "Invalid credentials. Please try again.")
+    return res.redirect("/account/login")
   }
+
+  req.session.account = {
+    account_id: accountData.account_id,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+  }
+
+  req.flash("notice", "Login successful.")
+  return res.redirect("/inv/")
 }
 
 module.exports = { buildLogin, buildRegister, registerAccount, loginAccount }

@@ -21,9 +21,9 @@ router.post("/register",
 // Process the login attempt
 router.post(
   "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
+  validate.loginRules(),
+  validate.checkLoginData,
+  utilities.handleErrors(accountController.loginAccount)
 )
 
 module.exports = router;

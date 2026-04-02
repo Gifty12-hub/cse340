@@ -4,8 +4,15 @@
     </h1>
     <% } else { res.redirect('/') } %>
 
-        <%- messages() %>
+<% if (typeof errors !== 'undefined' && errors && errors.errors && errors.errors.length > 0) { %>
+    <ul class="errors" style="color: red;">
+        <% errors.errors.forEach(function(err) { %>
+            <li><%= err.msg %></li>
+        <% }) %>
+    </ul>
+<% } %>
 
+        <%- messages() %>
 
             <form action="/account/login" method="post" class="login-form" id="loginForm">
 
@@ -25,3 +32,16 @@
                 Don't have an account?
                 <a href="/account/register">Register</a>
             </p>
+
+<script>
+  // Show pop-up message after flash message appears
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const messageNode = document.querySelector('.alert') || document.querySelector('.notice') || document.querySelector('.flash');
+    if (messageNode) {
+      const text = messageNode.innerText.trim();
+      if (text) {
+        alert(text);
+      }
+    }
+  });
+</script>
