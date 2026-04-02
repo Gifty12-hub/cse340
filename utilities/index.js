@@ -229,10 +229,10 @@ Util.inventoryRules = () => {
 /* ****************************************
  * Check Inventory Data
  * *************************************** */
-Util.checkInventoryData = (req, res, next) => {
+Util.checkInventoryData = async (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    let classificationList = Util.buildClassificationList(req.body.classification_id)
+    let classificationList = await Util.buildClassificationList(req.body.classification_id)
     res.locals.errors = errors.array()
     return res.render("inventory/add inventory", {
       title: "Add Inventory",

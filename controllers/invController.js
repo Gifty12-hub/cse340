@@ -48,9 +48,11 @@ invCont.throwError = async function (req, res) {
  * *************************************** */
 invCont.buildManagement = async function (req, res, next) {
   let nav = await utilities.getNav()
+  const message = req.flash("notice")
   res.render("inventory/management", {
     title: "Inventory Management",
     nav,
+    message,
   })
 }
 
