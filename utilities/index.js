@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const { body, validationResult } = require("express-validator")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const Util = {}
 
 /* ************************
@@ -248,6 +250,72 @@ Util.checkInventoryData = async (req, res, next) => {
       inv_price: req.body.inv_price,
       inv_miles: req.body.inv_miles,
       inv_color: req.body.inv_color,
+    })
+  }
+  next()
+}
+
+/* ****************************************
+ * Check JWT Token Middleware
+ * Verifies the presence and validity of a JWT token in the request cookies
+*********************************/
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in")
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        next()
+      })
+  } else {
+    next()
+  }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+ 
+
+/* ****************************************
+ * Check Update Data - errors directed to edit view
+ * *************************************** */
+Util.checkUpdateData = async (req, res, next) => {
+  const { inv_id } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let classificationSelect = await Util.buildClassificationList(req.body.classification_id)
+    let nav = await Util.getNav()
+    const itemName = `${req.body.inv_make} ${req.body.inv_model}`
+    return res.render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      errors: errors.array(),
+      classificationSelect,
+      inv_id,
+      inv_make: req.body.inv_make,
+      inv_model: req.body.inv_model,
+      inv_year: req.body.inv_year,
+      inv_description: req.body.inv_description,
+      inv_image: req.body.inv_image,
+      inv_thumbnail: req.body.inv_thumbnail,
+      inv_price: req.body.inv_price,
+      inv_miles: req.body.inv_miles,
+      inv_color: req.body.inv_color,
+      classification_id: req.body.classification_id,
     })
   }
   next()

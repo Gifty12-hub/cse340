@@ -18,7 +18,7 @@
     </ul>
 <% } %>
 
-<form action="/inv/add-inventory" method="post" id="addInventoryForm" onsubmit="return validateInventoryForm();" novalidate>
+<form action="/inv/add-inventory" class="addinv" method="post" id="addInventoryForm" onsubmit="return validateInventoryForm();" novalidate>
 
     <!-- Classification Dropdown -->
     <label for="classificationList">Classification</label>
@@ -79,7 +79,7 @@
         value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>">
     <span id="colorError" style="color: red; display: none;"></span>
 
-    <button type="submit">Add Vehicle</button>
+    <button type="submit">Add Inventory</button>
 
 </form>
 

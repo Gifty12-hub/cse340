@@ -452,99 +452,374 @@ nav ul {
   }
 }
 
-/*Account View*/
-/* login form styling */
+/* Login View */
+/* Center the form */
 .login-form {
   max-width: 400px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
+  margin: 80px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Labels */
 .login-form label {
-  margin-top: 10px;
+  display: block;
+  margin-bottom: 5px;
   font-weight: bold;
+  color: #333;
 }
 
+/* Inputs */
 .login-form input {
+  width: 100%;
   padding: 10px;
-  margin-top: 5px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border 0.3s ease;
 }
 
+/* Input focus */
+.login-form input:focus {
+  border-color: #4facfe;
+  outline: none;
+}
+
+/* Password instruction text */
+.login-form span {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Button */
 .login-form button {
-  margin-top: 15px;
-  padding: 10px;
-  background-color: #007BFF;
-  color: white;
+  width: 100%;
+  padding: 12px;
+  background: #4facfe;
   border: none;
-  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
+/* Button hover */
 .login-form button:hover {
-  background-color: #0056b3;
+  background: #007bff;
 }
 
-.notice {
-  background-color: #ffdddd;
-  padding: 10px;
-  margin: 10px auto;
-  max-width: 400px;
-  border-left: 5px solid red;
-}
-
+/* Register link */
 .register-link {
   text-align: center;
   margin-top: 15px;
+  font-size: 14px;
 }
 
-/*Registration form styling */
-form {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.register-link a {
+  color: #4facfe;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-label {
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 500px) {
+  .login-form {
+    margin: 40px 20px;
+    padding: 20px;
+  }
+}
+
+/* registration veiw */
+/* Form container */
+.register-form {
+  max-width: 450px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Labels */
+.register-form label {
   display: block;
   margin-top: 15px;
   margin-bottom: 5px;
-  color: #555;
+  font-weight: bold;
+  color: #333;
 }
 
-input {
+/* Inputs */
+.register-form input {
   width: 100%;
   padding: 10px;
-  border-radius: 5px;
   border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px;
+/* Focus effect */
+.register-form input:focus {
+  border-color: #43cea2;
+  outline: none;
+  box-shadow: 0 0 5px rgba(67, 206, 162, 0.5);
+}
+
+/* Password helper text */
+.register-form span {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.register-form button {
   width: 100%;
+  padding: 12px;
+  margin-top: 10px;
   border: none;
-  background-color: #007BFF;
-  color: white;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-size: 15px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-button#togglePassword {
-  background-color: #6c757d;
+/* Show password button */
+.register-form button[type="button"] {
+  background: #f1f1f1;
+  color: #333;
 }
 
-button:hover {
-  opacity: 0.9;
+.register-form button[type="button"]:hover {
+  background: #ddd;
 }
 
-.flash-message {
-  text-align: center;
-  color: green;
+/* Submit button */
+.register-form button[type="submit"] {
+  background: #43cea2;
+  color: white;
+  font-weight: bold;
+}
+
+.register-form button[type="submit"]:hover {
+  background: #2bbd91;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .register-form {
+    margin: 30px 20px;
+    padding: 20px;
+  }
+}
+
+/* add new inventory */
+
+/* Form container */
+.addinv {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Labels */
+.addinv label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Inputs, select, textarea */
+.addinv input,
+.addinv select,
+.addinv textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Textarea styling */
+.addinv textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Focus effect */
+.addinv input:focus,
+.addinv select:focus,
+.addinv textarea:focus {
+  border-color: #2a5298;
+  outline: none;
+  box-shadow: 0 0 5px rgba(42, 82, 152, 0.5);
+}
+
+/* Error messages */
+.addinv span {
+  display: block;
+  font-size: 12px;
+  margin-top: 3px;
+  margin-bottom: 8px;
+  color: red;
+}
+
+/* Button */
+.addinv button {
+  width: 100%;
   margin-top: 20px;
+  padding: 12px;
+  background: #2a5298;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Button hover */
+.addinv button:hover {
+  background: #1e3c72;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .addinv {
+    margin: 20px;
+    padding: 20px;
+  }
+}
+
+/* Container */
+.addnew {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-family: Arial, sans-serif;
+}
+
+/* Navigation links */
+.addnew ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.addnew ul li {
+  flex: 1;
+}
+
+.addnew ul li a {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background: #2a5298;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.addnew ul li a:hover {
+  background: #1e3c72;
+}
+
+/* Heading */
+.addnew h2 {
+  margin-top: 10px;
+  color: #333;
+}
+
+/* Description text */
+.addnew p {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Dropdown styling */
+.addnew select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Table styling */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+/* Table headers */
+#inventoryDisplay th {
+  background: #2a5298;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Table cells */
+#inventoryDisplay td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Zebra striping */
+#inventoryDisplay tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* Hover effect */
+#inventoryDisplay tr:hover {
+  background: #f1f1f1;
+}
+
+/* No script message */
+noscript {
+  display: block;
+  margin-top: 15px;
+  color: red;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .addnew ul {
+    flex-direction: column;
+  }
+
+  .addnew {
+    margin: 20px;
+    padding: 15px;
+  }
 }
