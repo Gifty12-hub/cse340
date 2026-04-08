@@ -225,5 +225,157 @@ invCont.updateInventory = async function (req, res, next) {
   }
 }
 
+/* ***************************
+ *  Build Delete Confirmation View
+ * ************************** */
+invCont.buildDeleteConfirmView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id);
+  let nav = await utilities.getNav();
+  const itemData = await invModel.getInventoryById(inv_id);
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+  res.render("./inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_price: itemData.inv_price,
+  });
+};
+
+/* ***************************
+ *  Delete Inventory Item
+ * ************************** */
+invCont.deleteInventoryItem = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const inv_id = parseInt(req.body.inv_id);
+  const deleteResult = await invModel.deleteInventoryItem(inv_id);
+
+  if (deleteResult.rowCount) {
+    req.flash("notice", "The vehicle was successfully deleted.");
+    res.redirect("/inv/");
+  } else {
+    req.flash("notice", "Sorry, the delete failed.");
+    res.redirect(`/inv/delete/${inv_id}`);
+  }
+};
+
+/* ****************************************
+*  Deliver Account Update View
+* *************************************** */
+async function buildUpdateView(req, res, next) {
+  let nav = await utilities.getNav();
+  
+  // Get logged-in user (adjust if your middleware uses different name)
+  const accountData = res.locals.accountData || req.user;
+  
+  if (!accountData) {
+    req.flash("notice", "You must be logged in.");
+    return res.redirect("/account/login");
+  }
+
+  res.render("account/update", {
+    title: "Update Account Information",
+    nav,
+    user: accountData,           // original user data
+    errors: null,
+    account_firstname: null,     // for sticky on error
+    account_lastname: null,
+    account_email: null
+  });
+}
+
+/* ****************************************
+*  Process Account Information Update
+* *************************************** */
+async function updateAccount(req, res) {
+  let nav = await utilities.getNav();
+  const { account_id, account_firstname, account_lastname, account_email } = req.body;
+
+  try {
+    const updateResult = await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    );
+
+    if (updateResult) {
+      // Refresh user data after update
+      const updatedAccount = await accountModel.getAccountById(account_id);
+      
+      // Update session/JWT data if needed (optional but recommended)
+      // delete updatedAccount.account_password; // already handled in model
+
+      req.flash("notice", "Account information updated successfully.");
+      
+      // Re-render management view with updated data
+      res.render("account/management", {
+        title: "Account Management",
+        nav,
+        user: updatedAccount,
+        errors: null
+      });
+    } else {
+      req.flash("notice", "Sorry, the update failed.");
+      res.redirect("/account/update/" + account_id);
+    }
+  } catch (error) {
+    // On error, re-render update view with sticky values + errors
+    req.flash("notice", "Sorry, there was an error updating your account.");
+    res.render("account/update", {
+      title: "Update Account Information",
+      nav,
+      user: res.locals.accountData,
+      account_firstname: account_firstname,
+      account_lastname: account_lastname,
+      account_email: account_email,
+      errors: error   // or pass validation errors
+    });
+  }
+}
+
+/* ****************************************
+*  Process Password Change
+* *************************************** */
+async function updatePassword(req, res) {
+  let nav = await utilities.getNav();
+  const { account_id, new_password } = req.body;
+
+  try {
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(new_password, 10);
+
+    const updateResult = await accountModel.updatePassword(account_id, hashedPassword);
+
+    if (updateResult) {
+      req.flash("notice", "Password changed successfully.");
+      
+      // Refresh account data
+      const updatedAccount = await accountModel.getAccountById(account_id);
+      
+      res.render("account/management", {
+        title: "Account Management",
+        nav,
+        user: updatedAccount,
+        errors: null
+      });
+    } else {
+      req.flash("notice", "Sorry, the password update failed.");
+      res.redirect("/account/update/" + account_id);
+    }
+  } catch (error) {
+    req.flash("notice", "Sorry, there was an error changing your password.");
+    res.render("account/update", {
+      title: "Update Account Information",
+      nav,
+      user: res.locals.accountData,
+      errors: error
+    });
+  }
+}
+
 module.exports = invCont
   

@@ -264,7 +264,7 @@ Util.checkJWTToken = (req, res, next) => {
    process.env.ACCESS_TOKEN_SECRET,
    function (err, accountData) {
     if (err) {
-     req.flash("Please log in")
+     req.flash("notice","Please log in")
      res.clearCookie("jwt")
      return res.redirect("/account/login")
     }
@@ -273,7 +273,8 @@ Util.checkJWTToken = (req, res, next) => {
     next()
    })
  } else {
-  next()
+   res.locals.loggedin = 0
+   next()
  }
 }
 
@@ -286,7 +287,7 @@ Util.checkJWTToken = (req, res, next) => {
     jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET,
       function (err, accountData) {
         if (err) {
-          req.flash("Please log in")
+          req.flash("notice", "Please log in")
           res.clearCookie("jwt")
           return res.redirect("/account/login")
         }
@@ -307,6 +308,26 @@ Util.checkJWTToken = (req, res, next) => {
     next()
   } else {
     req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
+ * Check Account Type
+ * Only allows Employee or Admin account types
+ * to access inventory management routes
+ **************************************** */
+Util.checkAccountType = (req, res, next) => {
+  if (res.locals.loggedin) {
+    const accountType = res.locals.accountData.account_type
+    if (accountType === "Employee" || accountType === "Admin") {
+      next()
+    } else {
+      req.flash("notice", "You do not have permission to access that resource.")
+      return res.redirect("/account/login")
+    }
+  } else {
+    req.flash("notice", "Please log in to access that resource.")
     return res.redirect("/account/login")
   }
 }

@@ -1,36 +1,26 @@
 <h1 class="manage">Inventory Management</h1>
 
 <!-- Flash message -->
-<% if (message) { %>
+<% if (message && message.length> 0) { %>
     <p style="color: green;" class="notice">
-        <%= message %>
+        <%= message[0] %>
     </p>
     <% } %>
 
-    <div class="addnew">
-        <ul>
-            <li><a href="/inv/add-classification">Add New Classification</a></li>
-            <li><a href="/inv/add-inventory">Add New Inventory</a></li>
-        </ul>
-        
-        
-        <h2>Manage Inventory</h2>
-        <p>Select a classification from the list to see the vehicles belonging to it.</p>
-        
-        <!-- Display the classification dropdown -->
-        <%- classificationSelect %>
-        
-            <!-- Empty table where inventory items will be injected -->
-            <table id="inventoryDisplay"></table>
-        
-            <noscript>JavaScript must be enabled to use this page.</noscript>
+        <div class="addnew">
+            <ul>
+                <li><a href="/inv/add-classification">Add New Classification</a></li>
+                <li><a href="/inv/add-inventory">Add New Inventory</a></li>
+            </ul>
 
-    </div>    
-    <!-- Links to add new classification and inventory -->
-        
-        
-        <!-- Link the JavaScript file -->
-        <script src="../../js/inventory.js"></script>
+            <h2>Manage Inventory</h2>
+            <p>Select a classification from the list to see the vehicles belonging to it.</p>
 
+            <%- classificationSelect %>
 
+                <table id="inventoryDisplay"></table>
 
+                <noscript>JavaScript must be enabled to use this page.</noscript>
+        </div>
+
+        <script src="/js/inventory.js"></script>

@@ -1,0 +1,71 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } %>
+
+        <%- messages() %>
+
+            <% if (typeof errors !=='undefined' && errors && errors.errors && errors.errors.length> 0) { %>
+                <ul class="errors" style="color: red;">
+                    <% errors.errors.forEach(function(err) { %>
+                        <li>
+                            <%= err.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+                    <% if (user && user.account_firstname) { %>
+
+                        <!-- ========== ACCOUNT UPDATE FORM ========== -->
+                        <h2>Update Account Information</h2>
+                        <form action="/account/update" method="POST" class="account-form" novalidate>
+                            <input type="hidden" name="account_id" value="<%= user.account_id %>">
+
+                            <div class="form-group">
+                                <label for="account_firstname">First Name:</label>
+                                <input type="text" id="account_firstname" name="account_firstname"
+                                    value="<%= typeof account_firstname !== 'undefined' ? account_firstname : user.account_firstname %>"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="account_lastname">Last Name:</label>
+                                <input type="text" id="account_lastname" name="account_lastname"
+                                    value="<%= typeof account_lastname !== 'undefined' ? account_lastname : user.account_lastname %>"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="account_email">Email Address:</label>
+                                <input type="email" id="account_email" name="account_email"
+                                    value="<%= typeof account_email !== 'undefined' ? account_email : user.account_email %>"
+                                    required>
+                            </div>
+
+                            <button type="submit">Update Account</button>
+                        </form>
+
+                        <!-- ========== CHANGE PASSWORD FORM ========== -->
+                        <h2>Change Password</h2>
+                        <p><strong>Note:</strong> Entering a new password will replace your current one.
+                            Password must be at least 12 characters and include at least 1 uppercase letter,
+                            1 number, and 1 special character.</p>
+
+                        <form action="/account/update/password" method="POST" class="account-form" novalidate>
+                            <input type="hidden" name="account_id" value="<%= user.account_id %>">
+
+                            <div class="form-group">
+                                <label for="new_password">New Password:</label>
+                                <input type="password" id="new_password" name="new_password"
+                                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                                    title="Min 12 chars, 1 uppercase, 1 number, 1 special character" required>
+                            </div>
+
+                            <button type="submit">Change Password</button>
+                        </form>
+
+                        <% } else { %>
+                            <p>You must be logged in to update your account.</p>
+                            <% } %>

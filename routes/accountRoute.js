@@ -1,35 +1,22 @@
-const express = require("express");
-const router = new express.Router();
-const utilities = require("../utilities");
-const accountController = require("../controllers/accountController");
-const pool = require("../database/")
-const regValidate = require('../utilities/account-validation');
-const validate = require("../utilities/account-validation");
+const express = require("express")
+const router = new express.Router()
+const utilities = require("../utilities")
+const accountController = require("../controllers/accountController")
+const validate = require('../utilities/account-validation')
 
-// Login route
-router.get("/login", utilities.handleErrors(accountController.buildLogin));
+// Public
+router.get("/login", utilities.handleErrors(accountController.buildLogin))
+router.get("/register", utilities.handleErrors(accountController.buildRegister))
+router.post("/register", validate.registationRules(), validate.checkRegData, utilities.handleErrors(accountController.registerAccount))
+router.post("/login", validate.loginRules(), validate.checkLoginData, utilities.handleErrors(accountController.accountLogin))
 
-//Register
-router.get("/register", utilities.handleErrors(accountController.buildRegister));
+// Logout
+router.get("/logout", utilities.handleErrors(accountController.logout))
 
-// Account management route
-router.get("/", utilities.handleErrors(accountController.buildAccountManagement));
+// Protected
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagement))
+router.get("/update/:id", utilities.checkLogin, utilities.handleErrors(accountController.buildUpdateView))
+router.post("/update", utilities.checkLogin, validate.updateAccountRules(), validate.checkUpdateData, utilities.handleErrors(accountController.updateAccount))
+router.post("/update/password", utilities.checkLogin, validate.updatePasswordRules(), validate.checkUpdatePasswordData, utilities.handleErrors(accountController.updatePassword))
 
-// registration process
-router.post("/register",
-  regValidate.registationRules(),
-  regValidate.checkRegData,
-  utilities.handleErrors(accountController.registerAccount));
-
-// login process
-router.post(
-  "/login",
-  validate.loginRules(),
-  validate.checkLoginData,
-  utilities.handleErrors(accountController.accountLogin)
-)
-
-//build management view
-router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
-
-module.exports = router;
+module.exports = router
