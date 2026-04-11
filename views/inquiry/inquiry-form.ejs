@@ -1,0 +1,77 @@
+<main id="main-content">
+    <section class="inquiry-hero">
+        <div class="inquiry-hero__badge">Test Drive / Inquiry</div>
+        <h1 class="inquiry-hero__title">
+            <%= vehicle.inv_year %>
+                <%= vehicle.inv_make %>
+                    <%= vehicle.inv_model %>
+        </h1>
+        <p class="inquiry-hero__sub">Fill out the form below and our team will get back to you within 24 hours.</p>
+    </section>
+    <div class="inquiry-layout">
+        <aside class="vehicle-card">
+            <img src="<%= vehicle.inv_thumbnail %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>"
+                class="vehicle-card__img" />
+            <div class="vehicle-card__info">
+                <span class="vehicle-card__price">$<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %>
+                        </span>
+                <ul class="vehicle-card__details">
+                    <li><strong>Mileage:</strong>
+                        <%= new Intl.NumberFormat('en-US').format(vehicle.inv_miles) %> mi
+                    </li>
+                    <li><strong>Color:</strong>
+                        <%= vehicle.inv_color %>
+                    </li>
+                    <li><strong>Type:</strong>
+                        <%= vehicle.classification_name %>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <div class="inquiry-form-wrap">
+            <% if (errors && errors.length> 0) { %>
+                <div class="notice error-box" role="alert">
+                    <p><strong>Please correct the following:</strong></p>
+                    <ul>
+                        <% errors.forEach(err=> { %><li>
+                                <%= err.msg %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                </div>
+                <% } %>
+                    <form id="inquiryForm" action="/inquiry" method="POST" novalidate>
+                        <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>" />
+                        <div class="form-group">
+                            <label for="customer_name">Full Name <span aria-hidden="true">*</span></label>
+                            <input type="text" id="customer_name" name="customer_name" value="<%= customer_name %>"
+                                placeholder="Jane Smith" required minlength="2" maxlength="100" pattern="^[A-Za-zs-']+$"
+                                autocomplete="name" aria-required="true" />
+                            <span class="field-error" id="nameError" role="alert"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_email">Email Address <span aria-hidden="true">*</span></label>
+                            <input type="email" id="customer_email" name="customer_email" value="<%= customer_email %>"
+                                placeholder="jane@example.com" required maxlength="150" autocomplete="email"
+                                aria-required="true" />
+                            <span class="field-error" id="emailError" role="alert"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_phone">Phone Number <span class="optional">(optional)</span></label>
+                            <input type="tel" id="customer_phone" name="customer_phone" value="<%= customer_phone %>"
+                                placeholder="(555) 123-4567" maxlength="20" autocomplete="tel" />
+                            <span class="field-error" id="phoneError" role="alert"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message <span aria-hidden="true">*</span></label>
+                            <textarea id="message" name="message" rows="5"
+                                placeholder="I am interested in scheduling a test drive..." required minlength="10"
+                                maxlength="1000" aria-required="true"><%= message %></textarea>
+                            <span class="char-count" id="charCount">0 / 1000</span>
+                            <span class="field-error" id="messageError" role="alert"></span>
+                        </div>
+                        <button type="submit" class="btn-submit" id="submitBtn">Send Inquiry</button>
+                    </form>
+        </div>
+    </div>
+</main>

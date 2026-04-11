@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS public.inquiries (
   inquiry_id     SERIAL PRIMARY KEY,
   inv_id         INTEGER NOT NULL

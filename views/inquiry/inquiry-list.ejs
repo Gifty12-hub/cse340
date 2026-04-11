@@ -1,0 +1,63 @@
+<main id="main-content">
+    <section class="admin-header">
+        <h1>Customer Inquiries</h1>
+        <p>All submitted inquiries are listed below, most recent first.</p>
+    </section>
+    <div class="admin-wrap">
+        <% if (!inquiries || inquiries.length===0) { %>
+            <p class="no-data">No inquiries have been submitted yet.</p>
+            <% } else { %>
+                <p class="inquiry-count"><strong>
+                        <%= inquiries.length %>
+                    </strong>
+                    <%= inquiries.length !==1 ? 'inquiries' : 'inquiry' %> found
+                </p>
+                <div class="table-scroll">
+                    <table class="inquiry-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Vehicle</th>
+                                <th>Customer Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% inquiries.forEach((inq, index)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= index + 1 %>
+                                    </td>
+                                    <td><a href="/inv/detail/<%= inq.inv_id %>">
+                                            <%= inq.inv_year %>
+                                                <%= inq.inv_make %>
+                                                    <%= inq.inv_model %>
+                                        </a></td>
+                                    <td>
+                                        <%= inq.customer_name %>
+                                    </td>
+                                    <td><a href="mailto:<%= inq.customer_email %>">
+                                            <%= inq.customer_email %>
+                                        </a></td>
+                                    <td>
+                                        <%= inq.customer_phone || '—' %>
+                                    </td>
+                                    <td title="<%= inq.message %>">
+                                        <%= inq.message.length> 80 ? inq.message.substring(0,80)+'…' : inq.message %>
+                                    </td>
+                                    <td>
+                                        <%= new
+                                            Date(inq.inquiry_date).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})
+                                            %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } %>
+    </div>
+</main>

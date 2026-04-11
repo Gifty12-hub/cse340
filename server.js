@@ -9,6 +9,7 @@ const utilities = require("./utilities")
 const session = require("express-session")
 const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
+const inquiryRoute = require("./routes/inquiryRoute")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 
@@ -52,6 +53,7 @@ app.use(staticRoute)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 app.use("/account", accountRoute)
+app.use("/inquiry", inquiryRoute)
 
 // 404 handler
 app.use(async (req, res, next) => {

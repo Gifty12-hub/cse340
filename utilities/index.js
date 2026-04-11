@@ -66,21 +66,18 @@ Util.buildClassificationGrid = async function(data){
  **************************************** */
 Util.buildItemDetail = function(data) {
   if (!data) {
-    return "<p class=\"notice\">No vehicle data available.</p>";
+    return '<p class="notice">No vehicle data available.</p>';
   }
-
   const formattedPrice = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
+    style: 'currency', currency: 'USD'
   }).format(data.inv_price);
-
   const formattedMileage = new Intl.NumberFormat('en-US').format(data.inv_miles);
-
   return `
     <div class="vehicle-detail-container">
       <div class="vehicle-detail-content">
         <div class="vehicle-detail-image">
-          <img src="${data.inv_image}" alt="Full-size image of ${data.inv_year} ${data.inv_make} ${data.inv_model}" />
+          <img src="${data.inv_image}"
+            alt="Full-size image of ${data.inv_year} ${data.inv_make} ${data.inv_model}" />
         </div>
         <div class="vehicle-detail-info">
           <div class="vehicle-detail-highlights">
@@ -93,6 +90,9 @@ Util.buildItemDetail = function(data) {
             <h3>About This Vehicle</h3>
             <p>${data.inv_description}</p>
           </div>
+          <a href="/inquiry/${data.inv_id}" class="inquire-btn">
+            Inquire / Schedule Test Drive
+          </a>
         </div>
       </div>
     </div>
